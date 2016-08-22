@@ -1,0 +1,22 @@
+<section>
+  <div class="page-header">
+    <h1>Landmarks</h1>
+  </div>
+  <div class="list-group">
+    <a data-ng-repeat="landmark in vm.landmarks"
+       data-ui-sref="landmarks.view({ landmarkId: landmark._id })"
+       class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span data-ng-bind="landmark.created | date:'mediumDate'"></span>
+        by
+        <span data-ng-if="landmark.user" data-ng-bind="landmark.user.displayName"></span>
+        <span data-ng-if="!landmark.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" data-ng-bind="landmark.name"></h4>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" data-ng-if="vm.landmarks.$resolved && !vm.landmarks.length">
+    No Landmarks yet, why don't you <a data-ui-sref="landmarks.create">create one</a>?
+  </div>
+</section>
