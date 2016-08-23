@@ -13,9 +13,12 @@ var path = require('path'),
  * Create a Landmark
  */
 exports.create = function(req, res) {
-  var landmark = new Landmark(req.body);
+  var landmark  = new Landmark(req.body);
   landmark.user = req.user;
 
+  console.log(landmark);
+  console.log(req.body);
+  
   landmark.save(function(err) {
     if (err) {
       return res.status(400).send({
@@ -76,6 +79,7 @@ exports.delete = function(req, res) {
     }
   });
 };
+
 
 /**
  * List of Landmarks

@@ -25,7 +25,7 @@ exports.invokeRolesPolicies = function () {
     roles: ['user'],
     allows: [{
       resources: '/api/landmarks',
-      permissions: ['get', 'post']
+      permissions: ['get', 'post']  //temp allow post for testing. pls remove.
     }, {
       resources: '/api/landmarks/:landmarkId',
       permissions: ['get']
@@ -34,7 +34,7 @@ exports.invokeRolesPolicies = function () {
     roles: ['guest'],
     allows: [{
       resources: '/api/landmarks',
-      permissions: ['get']
+      permissions: ['get','post']
     }, {
       resources: '/api/landmarks/:landmarkId',
       permissions: ['get']
@@ -47,6 +47,7 @@ exports.invokeRolesPolicies = function () {
  */
 exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
+
 
   // If an Landmark is being processed and the current user created it then allow any manipulation
   if (req.landmark && req.user && req.landmark.user && req.landmark.user.id === req.user.id) {

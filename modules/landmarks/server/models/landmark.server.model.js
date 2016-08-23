@@ -16,6 +16,11 @@ var LandmarkSchema = new Schema({
     required: 'Please fill Landmark name',
     trim: true
   },
+  type : {
+    type:String,
+    default:"Point"
+  },
+  coordinates:[Number],
   created: {
     type: Date,
     default: Date.now
