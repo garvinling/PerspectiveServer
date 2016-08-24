@@ -13,7 +13,7 @@ var path = require('path'),
  * Create a Landmark
  */
 exports.create = function(req, res) {
-  var landmark  = new Landmark(req.body);
+  var landmark = new Landmark(req.body);
   landmark.user = req.user;
 
   console.log(landmark);

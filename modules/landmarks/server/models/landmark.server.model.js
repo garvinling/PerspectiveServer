@@ -25,6 +25,10 @@ var LandmarkSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  leader_image:{
+    type:String,
+    default:""
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'
