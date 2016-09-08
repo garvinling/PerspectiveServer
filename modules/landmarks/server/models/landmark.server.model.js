@@ -29,6 +29,10 @@ var LandmarkSchema = new Schema({
     type:String,
     default:""
   },
+  photo_count:{
+    type:Number,
+    default:0
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'

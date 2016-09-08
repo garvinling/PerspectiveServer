@@ -34,7 +34,7 @@ exports.invokeRolesPolicies = function () {
     roles: ['guest'],
     allows: [{
       resources: '/api/landmarks',
-      permissions: ['get','post']
+      permissions: ['get','post'] //temp allow post for testing. pls remove.
     }, {
       resources: '/api/landmarks/:landmarkId',
       permissions: ['get']
