@@ -1,0 +1,24 @@
+<section>
+  <div class="page-header">
+    <h1>{{vm.landmark._id ? 'Edit Landmark' : 'New Landmark'}}</h1>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.form.landmarkForm" class="form-horizontal" ng-submit="vm.save(vm.form.landmarkForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="name">Name</label>
+          <input name="name" type="text" ng-model="vm.landmark.name" id="name" class="form-control" placeholder="Name" required>
+          <div ng-messages="vm.form.landmarkForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Landmark name is required.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{vm.landmark._id ? 'Update' : 'Create'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>
