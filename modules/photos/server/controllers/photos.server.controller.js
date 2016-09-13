@@ -16,7 +16,8 @@ exports.create = function(req, res) {
   var photo = new Photo(req.body);
   photo.user = req.user;
 
-
+  //TODO: Check if the landmark has no photos. Automatically make the image = leaderImage.
+  
   photo.save(function(err) {
     if (err) {
       return res.status(400).send({
@@ -93,6 +94,45 @@ exports.list = function(req, res) {
   });
 };
 
+
+
+
+/**
+ * Returns photo feed for the landmark ID
+ */
+
+ exports.getFeed = function(req,res){
+
+
+    Photo.find({landmark_id : req.params.landmarkId}).lean().exec(function(err,data){
+
+        if(err){
+
+          console.log('Error: ' + err);
+          return res.status(400).send({message : errorHandler.getErrorMessage(err)});
+        
+        } else {
+
+          console.log(data);
+          res.jsonp(data);
+
+        }
+
+
+    });
+
+
+ };
+
+
+
+
+
+
+
+
+
+
 /**
  * Photo middleware
  */
@@ -116,3 +156,10 @@ exports.photoByID = function(req, res, next, id) {
     next();
   });
 };
+
+
+
+
+
+
+
