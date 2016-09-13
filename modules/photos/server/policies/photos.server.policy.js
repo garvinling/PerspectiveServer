@@ -20,6 +20,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/photos/:photoId',
       permissions: '*'
+    },{
+      resources: '/api/photos/feed/:landmarkId',
+      permissions: '*'
     }]
   }, {
     roles: ['user'],
@@ -29,6 +32,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/photos/:photoId',
       permissions: ['get']
+    },{
+      resources: '/api/photos/feed/:landmarkId',
+      permissions: '*'
     }]
   }, {
     roles: ['guest'],
@@ -38,6 +44,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/photos/:photoId',
       permissions: ['get']
+    },{
+      resources: '/api/photos/feed/:landmarkId',
+      permissions: '*'
     }]
   }]);
 };

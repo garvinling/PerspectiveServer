@@ -12,10 +12,20 @@ module.exports = function(app) {
     .get(photos.list)
     .post(photos.create);
 
+
+
+  //Single photo operations
   app.route('/api/photos/:photoId').all(photosPolicy.isAllowed)
     .get(photos.read)
     .put(photos.update)
     .delete(photos.delete);
+
+
+  //Photofeed operations 
+  app.route('/api/photos/feed/:landmarkId').all(photosPolicy.isAllowed)
+    .get(photos.getFeed);
+
+
 
   // Finish by binding the Photo middleware
   app.param('photoId', photos.photoByID);
