@@ -101,28 +101,33 @@ exports.list = function(req, res) {
  * Returns photo feed for the landmark ID
  */
 
- exports.getFeed = function(req,res){
+exports.getFeed = function(req,res){ 
 
 
-    Photo.find({landmark_id : req.params.landmarkId}).lean().exec(function(err,data){
+  Photo.find(
+  {
+    landmark_id : req.params.landmarkId
+  }).lean().exec(function(err,data){
 
-        if(err){
+    if(err){
 
-          console.log('Error: ' + err);
-          return res.status(400).send({message : errorHandler.getErrorMessage(err)});
-        
-        } else {
+        console.log('Error: ' + err);
+        return res.status(400).send({
+          message : errorHandler.getErrorMessage(err)
+        });
+      
+      } else {
 
-          console.log(data);
-          res.jsonp(data);
+        console.log(data);
+        res.jsonp(data);
 
-        }
-
-
-    });
+      }
 
 
- };
+  });
+
+
+};
 
 
 
