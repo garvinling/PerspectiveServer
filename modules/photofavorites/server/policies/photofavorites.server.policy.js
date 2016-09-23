@@ -9,62 +9,50 @@ var acl = require('acl');
 acl = new acl(new acl.memoryBackend());
 
 /**
- * Invoke Photos Permissions
+ * Invoke Photofavorites Permissions
  */
 exports.invokeRolesPolicies = function () {
   acl.allow([{
     roles: ['admin'],
     allows: [{
-      resources: '/api/photos',
+      resources: '/api/photofavorites',
       permissions: '*'
     }, {
-      resources: '/api/photos/:photoId',
-      permissions: '*'
-    },{
-      resources: '/api/photos/feed/:landmarkId',
+      resources: '/api/photofavorites/:photofavoriteId',
       permissions: '*'
     }]
   }, {
     roles: ['user'],
     allows: [{
-      resources: '/api/photos',
+      resources: '/api/photofavorites',
       permissions: ['get', 'post']
     }, {
-      resources: '/api/photos/:photoId',
+      resources: '/api/photofavorites/:photofavoriteId',
       permissions: ['get']
-    },{
-      resources: '/api/photos/feed/:landmarkId',
-      permissions: '*'
     }]
   }, {
     roles: ['guest'],
     allows: [{
-      resources: '/api/photos',
-      permissions: ['get','post']
-    }, {
-      resources: '/api/photos/:photoId',
+      resources: '/api/photofavorites',
       permissions: ['get']
-    },{
-      resources: '/api/photos/feed/:landmarkId',
-      permissions: '*'
-    },{
-      resources: '/api/1.0/photos/favorites/create',
-      permissions: '*'
-    }
-    ]
+    }, {
+      resources: '/api/photofavorites/:photofavoriteId',
+      permissions: ['get']
+    }]
   }]);
 };
 
 /**
- * Check If Photos Policy Allows
+ * Check If Photofavorites Policy Allows
  */
 exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
 
-  // If an Photo is being processed and the current user created it then allow any manipulation
-  if (req.photo && req.user && req.photo.user && req.photo.user.id === req.user.id) {
+  // If an Photofavorite is being processed and the current user created it then allow any manipulation
+  if (req.photofavorite && req.user && req.photofavorite.user && req.photofavorite.user.id === req.user.id) {
     return next();
   }
+
   // Check for user roles
   acl.areAnyRolesAllowed(roles, req.route.path, req.method.toLowerCase(), function (err, isAllowed) {
     if (err) {

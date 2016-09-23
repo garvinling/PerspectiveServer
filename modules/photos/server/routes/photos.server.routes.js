@@ -21,6 +21,14 @@ module.exports = function(app) {
     .delete(photos.delete);
 
 
+
+  //Photo Favoriting
+  app.route('/api/1.0/photos/favorites/create').all(photosPolicy.isAllowed)
+    .post(photos.favoritePhoto);
+
+
+
+
   //Photofeed operations 
   app.route('/api/photos/feed/:landmarkId').all(photosPolicy.isAllowed)
     .get(photos.getFeed);

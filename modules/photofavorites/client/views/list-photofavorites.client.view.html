@@ -1,0 +1,22 @@
+<section>
+  <div class="page-header">
+    <h1>Photofavorites</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="photofavorite in vm.photofavorites"
+       ui-sref="photofavorites.view({ photofavoriteId: photofavorite._id })"
+       class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="photofavorite.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="photofavorite.user" ng-bind="photofavorite.user.displayName"></span>
+        <span ng-if="!photofavorite.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="photofavorite.name"></h4>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="vm.photofavorites.$resolved && !vm.photofavorites.length">
+    No Photofavorites yet, why don't you <a ui-sref="photofavorites.create">create one</a>?
+  </div>
+</section>

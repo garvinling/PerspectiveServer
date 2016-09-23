@@ -1,0 +1,26 @@
+<section>
+  <div class="page-header">
+    <h1 ng-bind="vm.photofavorite.name"></h1>
+  </div>
+  <div class="pull-right"
+       ng-show="vm.photofavorite.isCurrentUserOwner">
+    <a class="btn btn-primary"
+       ui-sref="photofavorites.edit({ photofavoriteId: vm.photofavorite._id })">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn btn-primary" ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <small>
+    <em class="text-muted">
+      Posted on
+      <span ng-bind="vm.photofavorite.created | date:'mediumDate'"></span>
+      by
+      <span ng-if="vm.photofavorite.user"
+            ng-bind="vm.photofavorite.user.displayName"></span>
+      <span ng-if="!vm.photofavorite.user">Deleted User</span>
+    </em>
+  </small>
+  <p class="lead" ng-bind="vm.photofavorite.content"></p>
+</section>

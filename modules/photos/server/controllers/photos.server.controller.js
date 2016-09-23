@@ -4,10 +4,12 @@
  * Module dependencies.
  */
 var path = require('path'),
-  mongoose = require('mongoose'),
-  Photo = mongoose.model('Photo'),
-  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
-  _ = require('lodash');
+  mongoose       = require('mongoose'),
+  Photo          = mongoose.model('Photo'),
+  errorHandler   = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+  PhotoFavorites = require(path.resolve('./modules/photofavorites/server/controllers/photofavorites.server.controller')),
+  Q              = require('q'),
+  _              = require('lodash');
 
 /**
  * Create a Photo
@@ -103,7 +105,6 @@ exports.list = function(req, res) {
 
 exports.getFeed = function(req,res){ 
 
-
   Photo.find(
   {
     landmark_id : req.params.landmarkId
@@ -131,7 +132,59 @@ exports.getFeed = function(req,res){
 
 
 
+exports.favoritePhoto = function(req,res){
 
+  var photoID = req.body.photo_id;
+  var userID  = req.body.user_id;
+
+  if(!photoID) {
+
+    return res.status(400).send({
+
+      message : 'Missing required field `photo_id` '
+
+    });
+
+  }
+
+  if(!userID) {
+
+    return res.status(400).send({
+
+      message : 'Missing required field `user_id` '
+
+    });
+  }
+
+  PhotoFavorites.createFavoriteLink(userID,photoID)
+    .then(function(result){
+        if(result === true) {
+
+          Photo.update({_id : photoID},{$inc : {likes:1}}).exec(function(err,data){
+
+            if(err){
+              return res.status(400).send({
+                message : errorHandler.getErrorMessage(err)
+              });
+            } 
+
+            return res.status(200).send({
+
+                message : 'Photo Liked!'
+
+            });
+          });
+
+        } else {
+
+          return res.status(200).send({
+
+              message : 'Cannot like an already liked photo!'
+          });
+
+        }
+    });
+};
 
 
 
