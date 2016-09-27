@@ -26,7 +26,8 @@ module.exports = function(app) {
   app.route('/api/1.0/photos/favorites/create').all(photosPolicy.isAllowed)
     .post(photos.favoritePhoto);
 
-
+  app.route('/api/1.0/photos/favorites/destroy').all(photosPolicy.isAllowed)
+    .post(photos.unfavoritePhoto);
 
 
   //Photofeed operations 

@@ -50,6 +50,9 @@ exports.invokeRolesPolicies = function () {
     },{
       resources: '/api/1.0/photos/favorites/create',
       permissions: '*'
+    },{
+      resources: '/api/1.0/photos/favorites/destroy',
+      permissions: '*'
     }
     ]
   }]);

@@ -11,6 +11,22 @@ var path = require('path'),
   Q              = require('q'),
   _              = require('lodash');
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Create a Photo
  */
@@ -187,6 +203,56 @@ exports.favoritePhoto = function(req,res){
 };
 
 
+exports.unfavoritePhoto = function(req,res){
+
+  var photoID = req.body.photo_id;
+  var userID  = req.body.user_id;
+
+  if(!photoID) {
+
+    return res.status(400).send({
+
+      message : 'Missing required field `photo_id` '
+
+    });
+
+  }
+
+  if(!userID) {
+
+    return res.status(400).send({
+
+      message : 'Missing required field `user_id` '
+
+    });
+  }
+
+
+  PhotoFavorites.destroyFavoriteLink(userID,photoID)
+    .then(function(result){
+
+      if(result){
+        Photo.update({_id : photoID},{$inc : {likes:-1}}).exec(function(err,data){
+
+            if(err){
+              return res.status(400).send({
+                message : errorHandler.getErrorMessage(err)
+              });
+            } 
+
+            return res.status(200).send({
+
+               message:'Unfavorite successful'
+
+            });
+          });
+      } else {
+
+        res.send({message:'User has not favorited this photo.'});
+     
+      }
+    });
+};
 
 
 

@@ -24,7 +24,7 @@ function isFavorited(userID,photoID){
         deferred.reject(new Error(errorHandler.getErrorMessage(err)));
       
       } else {
-        
+        console.log(data);
         if(data.length > 0){
           deferred.resolve(true);
         } else {
@@ -39,6 +39,65 @@ function isFavorited(userID,photoID){
 }
 
 
+
+
+
+exports.destroyFavoriteLink = function(userID,photoID){
+
+  var deferred       = Q.defer();
+  var recordsRemoved = 0;
+  
+
+    Photofavorite.remove({user_id:userID,photo_id:photoID}).exec(function(err,data){
+
+        if(err){
+          console.log('Error on destroy favorite link: ' + err);
+          deferred.reject(false);
+        }
+
+        recordsRemoved = data.result.n;
+
+        if(recordsRemoved === 0){
+          deferred.resolve(false);
+        } else {
+          deferred.resolve(true);
+        }
+
+    });
+
+
+
+
+
+  // isFavorited(userID,photoID)
+  //   .then(function(favorited){
+
+  //     if(favorited){
+  //       console.log('unfavoriting');
+
+  //       Photofavorite.remove({user_id:userID,photo_id:photoID}).exec(function(err){
+
+
+
+
+  //       });
+
+
+  //       deferred.resolve(true);
+
+  //     }else {
+  //       console.log('favorite does not exist');
+  //       deferred.reject(false);
+
+  //     }
+
+
+  //   });
+
+
+    return deferred.promise;
+
+};
 
 
 exports.createFavoriteLink = function(userID , photoID) {
@@ -67,7 +126,7 @@ exports.createFavoriteLink = function(userID , photoID) {
         });
 
       } else {
-        //TODO: Unliking a photo logic should be here
+
         deferred.resolve(false);
 
       }
@@ -75,8 +134,7 @@ exports.createFavoriteLink = function(userID , photoID) {
     });
 
     return deferred.promise;
-}
-
+};
 
 
 
